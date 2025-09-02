@@ -19,6 +19,7 @@ function AuthProvider({ children }) {
     async function handleSignIn(email, password) {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) { alert(error); throw error; }
+        setUser(data);
         alert("Login succesfull!");
         navigate("./");
     }
@@ -32,9 +33,14 @@ function AuthProvider({ children }) {
         return data;
     }
 
+    async function handleSignOut() {
+        const { error } = supabase.auth.signOut();
+        if (error) { alert(error); throw error; }
+        setUser(null);
+    }
 
     return (
-        <AuthContext value={{ user, handleSignUp, handleSignIn, handleSignUpGoogle }}>
+        <AuthContext value={{ user, handleSignUp, handleSignIn, handleSignUpGoogle, handleSignOut }}>
             {children}
         </AuthContext >
     );
