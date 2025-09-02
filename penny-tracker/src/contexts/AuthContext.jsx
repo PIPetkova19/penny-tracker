@@ -21,7 +21,7 @@ function AuthProvider({ children }) {
         if (error) { alert(error); throw error; }
         setUser(data);
         alert("Login succesfull!");
-        navigate("./");
+        navigate("/");
     }
 
     async function handleSignUpGoogle() {
@@ -37,10 +37,29 @@ function AuthProvider({ children }) {
         const { error } = supabase.auth.signOut();
         if (error) { alert(error); throw error; }
         setUser(null);
+        
+    }
+
+    //forgotten password
+    async function handleResetPass(email) {
+        const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: 'http://localhost:5173/updateUser',
+        })
+        alert("Email with link has been sent!");
+        if (error) { alert(error); throw error; }
+    }
+
+    async function handleUpdateUser(password) {
+        const { data, error } = await supabase.auth.updateUser({ password })
+        if (error) { alert(error); throw error; }
+        setUser(data);
+        navigate("/login")
     }
 
     return (
-        <AuthContext value={{ user, handleSignUp, handleSignIn, handleSignUpGoogle, handleSignOut }}>
+        <AuthContext value={{ user, handleSignUp, handleSignIn, handleSignUpGoogle, handleSignOut ,
+            handleResetPass, handleUpdateUser
+        }}>
             {children}
         </AuthContext >
     );
