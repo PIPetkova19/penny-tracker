@@ -3,10 +3,14 @@ import * as yup from 'yup';
 import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
 import { use } from 'react';
-import {AuthContext} from '../contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
+import Typography from '@mui/material/Typography';
+import { Link } from "react-router-dom";
+import { Divider } from '@mui/material';
+import Google from "@mui/icons-material/Google";
 
 function SignUp() {
-  const { handleSignUp } = use(AuthContext);
+  const { handleSignUp, handleSignUpGoogle } = use(AuthContext);
 
   const validationSchema = yup.object({
     email: yup
@@ -33,6 +37,10 @@ function SignUp() {
 
   return (
     <div>
+      <Typography variant="h4" component="h2">
+        Sign Up
+      </Typography>
+
       <form onSubmit={formik.handleSubmit}>
         <TextField
           fullWidth
@@ -60,6 +68,22 @@ function SignUp() {
         <Button color="primary" variant="contained" fullWidth type="submit">
           Submit
         </Button>
+
+        <Typography variant="subtitle1" component="h2">
+          Already have an account?{' '}
+          <Link to="/login" style={{ textDecoration: 'none' }}>Log in</Link>
+        </Typography>
+
+        <Divider>or</Divider>
+
+        <Button
+          variant="outlined"
+          startIcon={<Google />}
+          style={{ textTransform: 'none' }}
+          onClick={handleSignUpGoogle}>
+          Sign up with Google
+        </Button>
+
       </form>
     </div>
   );

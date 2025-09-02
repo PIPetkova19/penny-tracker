@@ -18,13 +18,23 @@ function AuthProvider({ children }) {
 
     async function handleSignIn(email, password) {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-        if (error) {alert(error); throw error; }
+        if (error) { alert(error); throw error; }
         alert("Login succesfull!");
         navigate("./");
     }
 
+    async function handleSignUpGoogle() {
+        const { data, error } = supabase.auth.signInWithOAuth({
+            provider: 'google',
+        })
+        if (error) { alert(error); throw error; }
+        setUser(data);
+        return data;
+    }
+
+
     return (
-        <AuthContext value={{ user, handleSignUp, handleSignIn }}>
+        <AuthContext value={{ user, handleSignUp, handleSignIn, handleSignUpGoogle }}>
             {children}
         </AuthContext >
     );
