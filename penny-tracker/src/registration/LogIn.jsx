@@ -9,85 +9,160 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import InputAdornment from '@mui/material/InputAdornment';
 import LockIcon from '@mui/icons-material/Lock';
 import { Link } from "react-router-dom";
+import Box from '@mui/material/Box';
+import { useTheme } from "@mui/material/styles";
 
 function LogIn() {
   const { handleSignIn, handleSignUpGoogle } = use(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const theme = useTheme();
 
   function handleSubmit(e) {
     e.preventDefault();
     handleSignIn(email, password);
   }
   return (
-    <>
-      <Typography variant="h4" component="h2">
-       Welcome back!
-      </Typography>
+    <div style={{ width: '100%', height: '90vh' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          height: '100%'
+        }}>
 
-   <Typography variant="subtitle1" component="h2">
-       Please enter your details to log in.
-      </Typography>
+        <Box
+          sx={{
+            border: 'solid',
+            borderRadius: '8%',
+            width: { xs: '70%', sm: '50%', md: '40%', lg: '30%' },
+            minHeight: 'auto'
+          }}>
 
-      <form onSubmit={handleSubmit}>
-        <TextField
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            },
-          }}
-          id="email"
-          name="email"
-          label="Email"
-          placeholder='your@email.com'
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon />
-                </InputAdornment>
-              ),
-            },
-          }} id="password"
-          name="password"
-          label="Password"
-          type="password"
-          placeholder='••••••'
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button color="primary" variant="contained" fullWidth type="submit"
-            style={{ textTransform: 'none' }}>
-          Log In
-        </Button>
+          <form onSubmit={handleSubmit} >
+            <Box sx={{ pt: { xs: 3, sm: 4, md: 5, lg: 5 } }}>
+              <Typography variant="h4" component="h2">
+                Welcome back!
+              </Typography>
+            </Box>
 
-        <Link to="/resetPassword" style={{ textDecoration: 'none' }}>
-          Forgot password?
-        </Link>
+            <Box>
+              <Typography variant="subtitle1" component="h2"
+                sx={{
+                  color: theme.palette.text.secondary
+                }}>
+                Please enter your details to log in.
+              </Typography>
+            </Box>
 
-        <Divider>or</Divider>
+            <Box sx={{
+              pt: { xs: 3, sm: 4, md: 5, lg: 5 }
+            }}>
+              <TextField variant="filled"
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+                id="email"
+                name="email"
+                label="Email"
+                placeholder='your@email.com'
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Box>
 
-        <Button
-          variant="outlined"
-          startIcon={<Google />}
-          style={{ textTransform: 'none' }}
-          onClick={handleSignUpGoogle}>
-          Continue with Google
-        </Button>
+            <Box sx={{
+              pt: { xs: 1, sm: 2, md: 3, lg: 3 }
+            }}>
+              <TextField variant="filled"
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockIcon />
+                      </InputAdornment>
+                    ),
+                  },
+                }} id="password"
+                name="password"
+                label="Password"
+                type="password"
+                placeholder='••••••'
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Box>
 
-        <Typography variant="subtitle1" component="h2">
-          Don't have an account?{' '}
-          <Link to="/signup" style={{ textDecoration: 'none' }}>Sign up</Link>
-        </Typography>
+            <Box sx={{
+              pt: { xs: 1, sm: 2, md: 3, lg: 3 }
+            }}>
+              <Button color="primary" variant="contained" type="submit"
+                sx={{
+                  textTransform: 'none',
+                  pl: { xs: '70px', sm: '80px', md: '90px', lg: '100px' },
+                  pr: { xs: '70px', sm: '80px', md: '90px', lg: '100px' },
+                  backgroundColor: theme.palette.customColor
+                }}>
+                Log In
+              </Button>
+            </Box>
 
-      </form>
-    </>
+            <Box sx={{
+              pt: { xs: 1, sm: 2, md: 3, lg: 3 }
+            }}>
+              <Link to="/resetPassword"
+                style={{
+                  textDecoration: 'none',
+                  color: theme.palette.customColor
+                }}>
+                Forgot password?
+              </Link>
+            </Box>
+
+            <Box sx={{ pt: 2, ml: 5, mr: 5 }}>
+              <Divider sx={{ color: theme.palette.text.secondary }}>or</Divider>
+            </Box>
+
+            <Box sx={{ pt: { xs: 1, sm: 2, md: 3, lg: 3 } }}>
+              <Button
+                variant="outlined"
+                startIcon={<Google />}
+                style={{
+                  textTransform: 'none',
+                  color: theme.palette.customColor,
+                  borderColor: theme.palette.customColor
+                }}
+                onClick={handleSignUpGoogle}>
+                Continue with Google
+              </Button>
+            </Box>
+
+            <Box sx={{
+              pt: { xs: 3, sm: 4, md: 5, lg: 5 },
+              pb: { xs: 3, sm: 4, md: 5, lg: 5 }
+            }}>
+              <Typography variant="subtitle1" component="h2"
+                sx={{ color: theme.palette.text.secondary }}>
+                Don't have an account?{' '}
+                <Link to="/signup"
+                  style={{
+                    textDecoration: 'none',
+                    color: theme.palette.customColor
+                  }}>Sign up</Link>
+              </Typography>
+            </Box>
+            
+          </form>
+        </Box>
+      </Box>
+    </div>
   )
 }
 

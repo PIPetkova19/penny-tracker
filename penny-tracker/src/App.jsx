@@ -22,8 +22,8 @@ function App() {
             onChange={handleChangeSwitch}
             slotProps={{ input: { 'aria-label': 'controlled' } }}
           />
-          <Link to="/signup">SignUp</Link> |{" "}
-          <Link to="/login">LogIn</Link>
+          <Link to="/login">Log In</Link>|{" "}
+           <Link to="/signup">Get Started</Link>
       </nav>
 
       <AuthProvider>

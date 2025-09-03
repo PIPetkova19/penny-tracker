@@ -10,21 +10,26 @@ export default function ThemeProvider({ children }) {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const [mode, setMode] = useState(prefersDarkMode);
 
-const customTheme = createTheme({
-  palette: { 
-    mode: mode ? "dark" : "light",
-    background: {
-      default: mode 
-        ? "rgba(255, 0, 0, 0.16)" 
-        : "rgba(210, 20, 20, 1)"
-    },
-        text: {
-      primary: mode ? "#ff1a1aff" : "#6c6c6cff",    
-      secondary: mode ? "#aaaaaa" : "#555555",  
-      customRed: "rgba(255,0,0,0.8)"          
-    }
-  }
-});
+    const customTheme = createTheme({
+        palette: {
+            mode: mode ? "dark" : "light",
+            background: {
+                default: mode ? "#121212" : "#ffe0e6"
+
+            },
+            text: {
+                primary: mode ? "#fff" : "#ff5072",
+                secondary: mode ? "rgba(255, 255, 255, 0.7)" : "#af9688"
+            },
+            buttons: {
+                active: mode ? "#fff" : "#ffb1c0",
+                hover: mode ? "rgba(255, 255, 255, 0.08)" : "#ff0000ff",
+                selected: mode ? "rgba(255, 255, 255, 0.16)" : "#ff0000ff"
+            },
+          
+            customColor: "#ff5072"
+        }
+    });
 
     function handleChangeSwitch() {
         if (mode) {
