@@ -14,8 +14,8 @@ export default function ThemeProvider({ children }) {
         palette: {
             mode: mode ? "dark" : "light",
             background: {
-                default: mode ? "#121212" : "#ffe0e6"
-
+                default: mode ? "#121212" : "#ffe0e6",
+                paper: mode ? "rgba(22, 22, 22, 1)" : "#f9e2e7ff"
             },
             text: {
                 primary: mode ? "#fff" : "#ff5072",
@@ -26,7 +26,7 @@ export default function ThemeProvider({ children }) {
                 hover: mode ? "rgba(255, 255, 255, 0.08)" : "#ff0000ff",
                 selected: mode ? "rgba(255, 255, 255, 0.16)" : "#ff0000ff"
             },
-          
+
             customColor: "#ff5072"
         }
     });

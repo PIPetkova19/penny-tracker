@@ -22,8 +22,9 @@ function LogIn() {
     e.preventDefault();
     handleSignIn(email, password);
   }
+  
   return (
-    <div style={{ width: '100%', height: '90vh' }}>
+    <div style={{ width: '100%', height: '80vh' }}>
       <Box
         sx={{
           display: 'flex',
@@ -36,10 +37,11 @@ function LogIn() {
 
         <Box
           sx={{
-            border: 'solid',
+           boxShadow: " rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
             borderRadius: '8%',
             width: { xs: '70%', sm: '50%', md: '40%', lg: '30%' },
-            minHeight: 'auto'
+            minHeight: 'auto',
+            backgroundColor:theme.palette.background.paper
           }}>
 
           <form onSubmit={handleSubmit} >
@@ -120,7 +122,7 @@ function LogIn() {
               <Link to="/resetPassword"
                 style={{
                   textDecoration: 'none',
-                  color: theme.palette.customColor
+                  color: theme.palette.customColor,
                 }}>
                 Forgot password?
               </Link>
@@ -158,7 +160,7 @@ function LogIn() {
                   }}>Sign up</Link>
               </Typography>
             </Box>
-            
+
           </form>
         </Box>
       </Box>

@@ -5,25 +5,30 @@ import Home from "./Home";
 import AuthProvider, { AuthContext } from "./contexts/AuthContext";
 import UpdateUser from "./registration/UpdateUser";
 import ResetPassword from "./registration/ResetPassword";
-import Switch from '@mui/material/Switch';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeContext } from "./contexts/ThemeContext";
 import { use } from 'react';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import MaterialUISwitch from './contexts/MaterialUISwitch';
 
 function App() {
-    const { mode ,handleChangeSwitch} = use(ThemeContext);
-  
+  const { mode, handleChangeSwitch } = use(ThemeContext);
+
   return (
     <>
       <nav>
-          <CssBaseline />
-          <Switch
-            checked={mode}
-            onChange={handleChangeSwitch}
-            slotProps={{ input: { 'aria-label': 'controlled' } }}
-          />
-          <Link to="/login">Log In</Link>|{" "}
-           <Link to="/signup">Get Started</Link>
+        <CssBaseline />
+        <FormGroup>
+          <FormControlLabel control={
+            <MaterialUISwitch
+              sx={{ ml: 1, mt:1 }}
+              checked={mode}
+              onChange={handleChangeSwitch} />} />
+        </FormGroup>
+
+        <Link to="/login">Log In</Link>|{" "}
+        <Link to="/signup">Get Started</Link>
       </nav>
 
       <AuthProvider>
