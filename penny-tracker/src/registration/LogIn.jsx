@@ -24,7 +24,7 @@ function LogIn() {
   }
   
   return (
-    <div style={{ width: '100%', height: '80vh' }}>
+    <div style={{ width: '100%', height: '100vh' }}>
       <Box
         sx={{
           display: 'flex',
