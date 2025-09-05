@@ -21,9 +21,9 @@ import { Divider } from '@mui/material';
 
 const drawerWidth = 240;
 
-function DashboardSignOut(props) {
+function DashboardLoggedIn(props) {
     const { mode, handleChangeSwitch } = use(ThemeContext);
-    const {handleSignOut } = use(AuthContext);
+    const { handleSignOut } = use(AuthContext);
     const theme = useTheme();
 
     const { window } = props;
@@ -98,8 +98,7 @@ function DashboardSignOut(props) {
 
 
     return (
-        <>
-
+        <nav>
             <CssBaseline />
             <Box sx={{ display: 'flex' }}>
                 <AppBar component="nav"
@@ -128,7 +127,7 @@ function DashboardSignOut(props) {
                         </Typography>
 
                         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                            <Button variant="outlined" onClick={handleSignOut}
+                            <Button variant="outlined"
                                 sx={{
                                     borderColor: theme.palette.customColor,
                                     mr: 2
@@ -139,7 +138,22 @@ function DashboardSignOut(props) {
                                         textTransform: 'none',
                                         color: theme.palette.customColor
                                     }}>
-                                    Sign Out
+                                    Log In
+                                </Link>
+                            </Button>
+
+                            <Button variant="contained"
+                                sx={{
+                                    backgroundColor: theme.palette.customColor,
+                                    mr: 1
+                                }}>
+                                <Link to="/signup"
+                                    style={{
+                                        textDecoration: 'none',
+                                        textTransform: 'none',
+                                        color: theme.palette.background.default
+                                    }}>
+                                    Get Started
                                 </Link>
                             </Button>
                         </Box>
@@ -172,10 +186,10 @@ function DashboardSignOut(props) {
                         {drawer}
                     </Drawer>
                 </nav>
-
             </Box>
-        </>
-    )
+        </nav>
+    );
 }
 
-export default DashboardSignOut
+
+export default DashboardLoggedIn;

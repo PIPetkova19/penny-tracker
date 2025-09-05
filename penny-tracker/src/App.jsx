@@ -7,6 +7,7 @@ import AuthProvider, { AuthContext } from "./contexts/AuthContext";
 import UpdateUser from "./registration/UpdateUser";
 import ResetPassword from "./registration/ResetPassword";
 import { useContext } from "react";
+import AddExpense from "./AddExpenses";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -25,10 +26,9 @@ function App() {
 
       <Route path="/resetPassword" element={<ResetPassword />} />
       <Route path="/updateUser" element={<UpdateUser />} />
-
-
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<LogIn />} />
+      <Route path="/addExpense" element={<AddExpense />} />
     </Routes>
   );
 }

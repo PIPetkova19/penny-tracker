@@ -1,0 +1,109 @@
+import Button from "@mui/material/Button";
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { Divider, FormGroup } from '@mui/material';
+import Google from "@mui/icons-material/Google";
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import InputAdornment from '@mui/material/InputAdornment';
+import LockIcon from '@mui/icons-material/Lock';
+import { Link } from "react-router-dom";
+import Box from '@mui/material/Box';
+import { useTheme } from "@mui/material/styles";
+import { use, useState } from 'react';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Input from '@mui/material/Input';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from "dayjs";
+import { AuthContext } from "./contexts/AuthContext";
+
+
+function AddExpense() {
+    const theme = useTheme();
+    const [expenseTitle, setExpenseTitle] = useState('');
+    const [expenseAmount, setExpenseAmount] = useState('');
+    const [expenseDate, setExpenseDate] = useState(null);
+    const [expenseCategory, setExpenseCategory] = useState('');
+    const {user, handleAddExpense } = use(AuthContext);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        handleAddExpense(expenseTitle, expenseAmount, expenseDate, expenseCategory);
+    }
+
+    return (
+        <div style={{
+            width: '100%', height: '100vh'
+        }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    height: '100%'
+                }}>
+                <form onSubmit={handleSubmit}>
+                    <FormGroup>
+                        <FormControl sx={{ mb: 5 }}>
+                            <InputLabel htmlFor="expenseTitle">Title</InputLabel>
+                            <Input
+                                id="expenseTitle"
+                                value={expenseTitle}
+                                onChange={(e) => setExpenseTitle(e.target.value)} />
+                        </FormControl>
+
+                        <FormControl sx={{ mb: 5 }}>
+                            <InputLabel htmlFor="expenseAmount">Amount</InputLabel>
+                            <Input
+                                id="expenseAmount"
+                                value={expenseAmount}
+                                onChange={(e) => setExpenseAmount(e.target.value)} />
+                        </FormControl>
+
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                label="Date"
+                                value={expenseDate}
+                                onChange={(newValue) => setExpenseDate(newValue)}
+                            />
+                        </LocalizationProvider>
+
+                        {/*napr tablica */}
+                        <FormControl sx={{ mt: 5 }}>
+                            <InputLabel id="expenseCategory">Category</InputLabel>
+                            <Select
+                                labelId="expenseCategory"
+                                id="expenseCategory"
+                                value={expenseCategory}
+                                onChange={(e) => setExpenseCategory(e.target.value)}
+                            >
+                                <MenuItem value="food">Food</MenuItem>
+                                <MenuItem value="transport">Transport</MenuItem>
+                                <MenuItem value="shopping">Shopping</MenuItem>
+                                <MenuItem value="utility">Utility</MenuItem>
+                                <MenuItem value="other">Other</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </FormGroup>
+                    <Button color="primary" variant="contained" type="submit"
+                        sx={{
+                            textTransform: 'none',
+                            pl: { xs: '70px', sm: '80px', md: '90px', lg: '100px' },
+                            pr: { xs: '70px', sm: '80px', md: '90px', lg: '100px' },
+                            backgroundColor: theme.palette.customColor
+                        }}>
+                        Submit
+                    </Button>
+                </form>
+            </Box>
+        </div>
+    )
+}
+
+export default AddExpense

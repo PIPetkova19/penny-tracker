@@ -1,14 +1,26 @@
 import { useTheme } from "@mui/material/styles";
-import DashboardLoggedIn from "../dashboard/DashboardLoggedIn";
+import DashboardSignedOut from "../dashboard/DashboardSignedOut";
+import { Box } from "@mui/material";
 
+//Intro page
 function HomeSignOut() {
   const theme = useTheme();
 
   return (
-    <div style={{ backgroundColor: theme.palette.background.default }}>
-      <DashboardLoggedIn />
-   <h1>signed out </h1>     <h1>signed out </h1>     <h1>signed out </h1>  
-    </div>
+    <Box
+      style={{
+        backgroundColor: theme.palette.background.default,
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: "100vh",
+      }}>
+
+      <DashboardSignedOut />
+
+      <Box sx={{ flex: 2, m: 5, pt: 10 }}>
+       <h1>signed out</h1>  
+      </Box>
+    </Box>
   );
 }
 

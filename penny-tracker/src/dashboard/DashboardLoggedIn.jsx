@@ -21,7 +21,7 @@ import { Divider } from '@mui/material';
 
 const drawerWidth = 240;
 
-function DashboardLoggedIn(props) {
+function DashboardSignOut(props) {
     const { mode, handleChangeSwitch } = use(ThemeContext);
     const { handleSignOut } = use(AuthContext);
     const theme = useTheme();
@@ -98,7 +98,8 @@ function DashboardLoggedIn(props) {
 
 
     return (
-        <nav>
+        <>
+
             <CssBaseline />
             <Box sx={{ display: 'flex' }}>
                 <AppBar component="nav"
@@ -127,7 +128,7 @@ function DashboardLoggedIn(props) {
                         </Typography>
 
                         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                            <Button variant="outlined"
+                            <Button variant="outlined" onClick={handleSignOut}
                                 sx={{
                                     borderColor: theme.palette.customColor,
                                     mr: 2
@@ -138,22 +139,24 @@ function DashboardLoggedIn(props) {
                                         textTransform: 'none',
                                         color: theme.palette.customColor
                                     }}>
-                                    Log In
+                                    Sign Out
                                 </Link>
                             </Button>
+                        </Box>
 
-                            <Button variant="contained"
+                        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                            <Button variant="outlined"
                                 sx={{
-                                    backgroundColor: theme.palette.customColor,
-                                    mr: 1
+                                    borderColor: theme.palette.customColor,
+                                    mr: 2
                                 }}>
-                                <Link to="/signup"
+                                <Link to="/addExpense"
                                     style={{
                                         textDecoration: 'none',
                                         textTransform: 'none',
-                                        color: theme.palette.background.default
+                                        color: theme.palette.customColor
                                     }}>
-                                    Get Started
+                                 Add Expenses
                                 </Link>
                             </Button>
                         </Box>
@@ -186,10 +189,10 @@ function DashboardLoggedIn(props) {
                         {drawer}
                     </Drawer>
                 </nav>
+
             </Box>
-        </nav>
-    );
+        </>
+    )
 }
 
-
-export default DashboardLoggedIn;
+export default DashboardSignOut

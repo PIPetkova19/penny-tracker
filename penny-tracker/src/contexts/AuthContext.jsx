@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 
 function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
+    const [expense, setExpense] = useState(null);
     let navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -35,7 +36,7 @@ function AuthProvider({ children }) {
                 alert("User already registered!");
                 return null;
             }
-            
+
             else {
                 const { data, error } = await supabase.auth.signUp({ email, password });
                 if (error) {
@@ -43,7 +44,7 @@ function AuthProvider({ children }) {
                     throw error;
                 }
 
-                await supabase.from('myUsers').insert([{ email }]);
+                await supabase.from('myUsers').insert([{  id: data.user.id, email }]);
                 setUser(data.user);
                 alert("An email confirmation has been sent!");
                 return data.user;
@@ -61,7 +62,7 @@ function AuthProvider({ children }) {
             const { data, error } = await supabase.auth.signInWithPassword({ email, password })
             if (error) { alert(error); throw error; }
             alert("Login succesfull!");
-            setUser(data);
+            setUser(data.user);
             navigate("/");
         }
         catch (error) {
@@ -79,7 +80,7 @@ function AuthProvider({ children }) {
                 provider: 'google',
             })
             if (error) { alert(error); throw error; }
-            setUser(data);
+            setUser(data.user);
             return data;
         }
         catch (error) {
@@ -128,7 +129,7 @@ function AuthProvider({ children }) {
             setIsLoading(true);
             const { data, error } = await supabase.auth.updateUser({ password })
             if (error) { alert(error); throw error; }
-            setUser(data);
+            setUser(data.user);
             navigate("/login")
         }
         catch (error) {
@@ -139,10 +140,36 @@ function AuthProvider({ children }) {
         }
     }
 
+
+    async function handleAddExpense(expenseTitle, expenseAmount, expenseDate, expenseCategory) {
+        try {
+            setIsLoading(true);
+            const { data, error } = await supabase
+                .from('expenses')
+                .insert([{   title:expenseTitle,
+                amount: expenseAmount,
+                date: expenseDate ? expenseDate.toISOString() : null,
+                category:expenseCategory,
+                user_id:  user.id }]);
+
+            if (error) {
+                alert(error.message);
+                throw error;
+            }
+            setExpense(data);
+            alert("Expense had been added!");
+        }
+        catch (error) {
+            alert(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     return (
         <AuthContext value={{
             user, handleSignUp, handleSignIn, handleSignUpGoogle, handleSignOut,
-            handleResetPass, handleUpdateUser
+            handleResetPass, handleUpdateUser,
+            handleAddExpense
         }}>
             {children}
         </AuthContext >
