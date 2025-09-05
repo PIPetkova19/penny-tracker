@@ -1,28 +1,36 @@
 import { Routes, Route } from "react-router-dom";
 import SignUp from "./registration/SignUp";
 import LogIn from "./registration/LogIn";
-import Home from "./Home";
+import HomeSignOut from "./main-page/HomeSignOut";
+import HomeLoggedIn from "./main-page/HomeLoggedIn";
 import AuthProvider, { AuthContext } from "./contexts/AuthContext";
 import UpdateUser from "./registration/UpdateUser";
 import ResetPassword from "./registration/ResetPassword";
-import Dashboard from './Dashboard'
+import { useContext } from "react";
+
 function App() {
+  const { user } = useContext(AuthContext);
 
   return (
-    <>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />
-          <Route path="/updateUser" element={<UpdateUser />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+    <Routes>
+      {user ? (
+        <>
+        <Route path="/" element={<HomeLoggedIn />} />
+      </>
+      ) : (
+        <>
+          <Route path="/" element={<HomeSignOut />} />
+          </>
+      )}
 
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<LogIn />} />
-        </Routes>
-      </AuthProvider>
-    </>
-  )
+      <Route path="/resetPassword" element={<ResetPassword />} />
+      <Route path="/updateUser" element={<UpdateUser />} />
+
+
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/login" element={<LogIn />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
