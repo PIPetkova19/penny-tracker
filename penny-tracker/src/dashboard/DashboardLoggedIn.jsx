@@ -56,26 +56,13 @@ function DashboardSignOut(props) {
 
             <Box>
                 <Button type="text" >
-                    <Link to="/login"
-                        style={{
-                            textDecoration: 'none',
-                            textTransform: 'none',
-                            color: theme.palette.text.primary
-                        }}>
-                        Log In
-                    </Link>
-                </Button>
-            </Box>
-
-            <Box>
-                <Button type="text" >
-                    <Link to="/signup"
+                    <Link to="/addExpense"
                         style={{
                             textDecoration: 'none',
                             textTransform: 'none',
                             color: theme.palette.text.primary
                         }} >
-                        Get Started
+                        Add Expenses
                     </Link>
                 </Button>
             </Box>
@@ -99,7 +86,6 @@ function DashboardSignOut(props) {
 
     return (
         <>
-
             <CssBaseline />
             <Box sx={{ display: 'flex' }}>
                 <AppBar component="nav"
@@ -128,6 +114,40 @@ function DashboardSignOut(props) {
                         </Typography>
 
                         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                            <Button variant="outlined"
+                                sx={{
+                                    borderColor: theme.palette.customColor,
+                                    mr: 2
+                                }}>
+                                <Link to="/addExpenses"
+                                    style={{
+                                        textDecoration: 'none',
+                                        textTransform: 'none',
+                                        color: theme.palette.customColor
+                                    }}>
+                                    Add Expenses
+                                </Link>
+                            </Button>
+                        </Box>
+
+                        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                            <Button variant="outlined"
+                                sx={{
+                                    borderColor: theme.palette.customColor,
+                                    mr: 2
+                                }}>
+                                <Link to="/trackExpenses"
+                                    style={{
+                                        textDecoration: 'none',
+                                        textTransform: 'none',
+                                        color: theme.palette.customColor
+                                    }}>
+                                    Track Expenses
+                                </Link>
+                            </Button>
+                        </Box>
+
+                        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                             <Button variant="outlined" onClick={handleSignOut}
                                 sx={{
                                     borderColor: theme.palette.customColor,
@@ -140,23 +160,6 @@ function DashboardSignOut(props) {
                                         color: theme.palette.customColor
                                     }}>
                                     Sign Out
-                                </Link>
-                            </Button>
-                        </Box>
-
-                        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                            <Button variant="outlined"
-                                sx={{
-                                    borderColor: theme.palette.customColor,
-                                    mr: 2
-                                }}>
-                                <Link to="/addExpense"
-                                    style={{
-                                        textDecoration: 'none',
-                                        textTransform: 'none',
-                                        color: theme.palette.customColor
-                                    }}>
-                                 Add Expenses
                                 </Link>
                             </Button>
                         </Box>

@@ -1,12 +1,5 @@
 import Button from "@mui/material/Button";
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import { Divider, FormGroup } from '@mui/material';
-import Google from "@mui/icons-material/Google";
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import InputAdornment from '@mui/material/InputAdornment';
-import LockIcon from '@mui/icons-material/Lock';
-import { Link } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { useTheme } from "@mui/material/styles";
 import { use, useState } from 'react';
@@ -18,9 +11,9 @@ import Input from '@mui/material/Input';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from "dayjs";
-import { AuthContext } from "./contexts/AuthContext";
-
+import { AuthContext } from "../contexts/AuthContext";
+import Typography from '@mui/material/Typography';
+import DashboardLoggedIn from "../dashboard/DashboardLoggedIn";
 
 function AddExpense() {
     const theme = useTheme();
@@ -28,7 +21,7 @@ function AddExpense() {
     const [expenseAmount, setExpenseAmount] = useState('');
     const [expenseDate, setExpenseDate] = useState(null);
     const [expenseCategory, setExpenseCategory] = useState('');
-    const {user, handleAddExpense } = use(AuthContext);
+    const { user, handleAddExpense } = use(AuthContext);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -39,6 +32,8 @@ function AddExpense() {
         <div style={{
             width: '100%', height: '100vh'
         }}>
+      <DashboardLoggedIn />
+            
             <Box
                 sx={{
                     display: 'flex',
@@ -49,8 +44,13 @@ function AddExpense() {
                     height: '100%'
                 }}>
                 <form onSubmit={handleSubmit}>
+                    <Box sx={{ pt: { xs: 3, sm: 4, mb: 5, lg: 5 } }}>
+                        <Typography variant="h4" component="h2">
+                          Add Expense
+                        </Typography>
+                    </Box>
                     <FormGroup>
-                        <FormControl sx={{ mb: 5 }}>
+                        <FormControl sx={{mt:2, mb: 5 }}>
                             <InputLabel htmlFor="expenseTitle">Title</InputLabel>
                             <Input
                                 id="expenseTitle"
@@ -91,11 +91,17 @@ function AddExpense() {
                             </Select>
                         </FormControl>
                     </FormGroup>
-                    <Button color="primary" variant="contained" type="submit"
+
+                    <Box sx={{ pt: 2, ml: 1, mr: 1 }}>
+                        <Divider sx={{ color: theme.palette.text.secondary }} />
+                    </Box>
+
+                    <Button color="primary" variant="contained" type="submit" fullWidth
                         sx={{
                             textTransform: 'none',
                             pl: { xs: '70px', sm: '80px', md: '90px', lg: '100px' },
                             pr: { xs: '70px', sm: '80px', md: '90px', lg: '100px' },
+                            mt: 2,
                             backgroundColor: theme.palette.customColor
                         }}>
                         Submit

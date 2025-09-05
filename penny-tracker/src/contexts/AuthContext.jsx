@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 
 function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
-    const [expense, setExpense] = useState(null);
+    const [expense, setExpense] = useState([]);
     let navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -21,6 +21,12 @@ function AuthProvider({ children }) {
         };
         getSession();
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            fetchExpenses();
+        }
+    }, [user]);//!
 
     async function handleSignUp(email, password) {
         try {
@@ -44,7 +50,7 @@ function AuthProvider({ children }) {
                     throw error;
                 }
 
-                await supabase.from('myUsers').insert([{  id: data.user.id, email }]);
+                await supabase.from('myUsers').insert([{ id: data.user.id, email }]);
                 setUser(data.user);
                 alert("An email confirmation has been sent!");
                 return data.user;
@@ -146,17 +152,18 @@ function AuthProvider({ children }) {
             setIsLoading(true);
             const { data, error } = await supabase
                 .from('expenses')
-                .insert([{   title:expenseTitle,
-                amount: expenseAmount,
-                date: expenseDate ? expenseDate.toISOString() : null,
-                category:expenseCategory,
-                user_id:  user.id }]);
+                .insert([{
+                    title: expenseTitle,
+                    amount: expenseAmount,
+                    date: expenseDate ? expenseDate.toISOString() : null,
+                    category: expenseCategory,
+                    user_id: user.id
+                }]);
 
             if (error) {
                 alert(error.message);
                 throw error;
             }
-            setExpense(data);
             alert("Expense had been added!");
         }
         catch (error) {
@@ -165,11 +172,26 @@ function AuthProvider({ children }) {
             setIsLoading(false);
         }
     }
+
+    async function fetchExpenses() {
+       const { data, error } = await supabase
+            .from('expenses')
+            .select('*')
+            .eq('user_id', user.id)
+            .order('date', { ascending: false });
+
+        if (error) {
+            console.log(error);
+            return;
+        }
+        setExpense(data);
+    }
+
     return (
         <AuthContext value={{
             user, handleSignUp, handleSignIn, handleSignUpGoogle, handleSignOut,
             handleResetPass, handleUpdateUser,
-            handleAddExpense
+            handleAddExpense, expense
         }}>
             {children}
         </AuthContext >

@@ -79,18 +79,6 @@ function DashboardLoggedIn(props) {
                     </Link>
                 </Button>
             </Box>
-
-            <Box sx={{ mt: "auto", mb: 2 }}>
-                <Button
-                    variant="contained"
-                    onClick={handleSignOut}
-                    style={{
-                        textTransform: 'none',
-                        backgroundColor: theme.palette.customColor
-                    }}>
-                    Sign out
-                </Button>
-            </Box>
         </Box >
     );
 
