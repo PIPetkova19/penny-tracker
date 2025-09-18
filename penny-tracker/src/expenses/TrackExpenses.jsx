@@ -6,20 +6,40 @@ import DashboardLoggedIn from "../dashboard/DashboardLoggedIn";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import { supabase } from "../supabase/supabase-client";
 
 function TrackExpenses() {
-    const { expense } = use(AuthContext);
+    const { expense, setExpense, isLoading } = use(AuthContext);
 
-    const listItems = expense.map((item, index) => (
-        <ListItem key={index}>
-            <ListItemText primary={item.title}
-                secondary={`${item.amount} | ${item.date}| ${item.category}`} />
+    async function deleteExpenses(id) {
+        const { data, error } = await supabase
+            .from('expenses')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            console.log(error);
+            return;
+        }
+        setExpense(expense.filter(item => item.id !== id));
+    }
+
+    const listItems = (expense || []).map((item, index) => (
+        <ListItem key={index} divider secondaryAction={
+            <IconButton edge="end" aria-label="delete" onClick={() => deleteExpenses(item.id)}>
+                <DeleteIcon />
+            </IconButton>
+        }>
+            <ListItemText primary={`Title: ${item.title}`}
+                secondary={`Amount: ${item.amount} | Date: ${item.date} | Category: ${item.category}`} />
         </ListItem>
     ))
 
     return (
         <div style={{
-            width: '100%', height: '100vh'
+            width: '100%', height: '100vh', overflowY: 'scroll'
         }}>
             <DashboardLoggedIn />
 
@@ -32,10 +52,13 @@ function TrackExpenses() {
                     textAlign: 'center',
                     height: '100%'
                 }}>
-
-                <List sx={{ width: '600px', maxWidth: '1000px' }}>
-                    {listItems}
-                </List>
+                {isLoading ? (
+                    <p>loading</p>
+                ) : listItems.length ? (
+                    <List>{listItems}</List>
+                ) : (
+                    <p>no items</p>
+                )}
             </Box>
         </div>
     )

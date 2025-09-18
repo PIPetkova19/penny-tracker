@@ -43,7 +43,6 @@ function DashboardSignOut(props) {
             <Box>
                 <Typography variant="h6"
                     sx={{
-                        my: 2,
                         color: theme.palette.customColor
                     }}>
                     Penny Tracker

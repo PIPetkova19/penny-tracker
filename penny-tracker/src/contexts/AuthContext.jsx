@@ -1,8 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 import { supabase } from "../supabase/supabase-client";
 import { useNavigate } from "react-router";
-import Button from '@mui/material/Button';
-
 
 export const AuthContext = createContext();
 
@@ -19,6 +17,14 @@ function AuthProvider({ children }) {
             const { data: { session } } = await supabase.auth.getSession();
             //if there is no session the user is set to null
             setUser(session?.user ?? null);
+
+            if (session.user) {
+                const { data, error } = await supabase
+                    .from('expenses')
+                    .select('*')
+                    .eq('user_id', session.user.id);
+                if (!error) setExpense(data);
+            }
             setIsLoading(false);
         };
         getSession();
@@ -160,12 +166,14 @@ function AuthProvider({ children }) {
                     date: expenseDate ? expenseDate.toISOString() : null,
                     category: expenseCategory,
                     user_id: user.id
-                }]);
+                }])
+                .select();
 
             if (error) {
                 alert(error.message);
                 throw error;
             }
+           setExpense(prev => [...prev, ...data]);
         }
         catch (error) {
             alert(error.message);
@@ -192,7 +200,7 @@ function AuthProvider({ children }) {
         <AuthContext value={{
             user, handleSignUp, handleSignIn, handleSignUpGoogle, handleSignOut,
             handleResetPass, handleUpdateUser,
-            handleAddExpense, expense
+            handleAddExpense, expense, setExpense, isLoading
         }}>
             {children}
         </AuthContext >
