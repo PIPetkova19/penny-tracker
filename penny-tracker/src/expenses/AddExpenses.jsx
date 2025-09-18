@@ -14,6 +14,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { AuthContext } from "../contexts/AuthContext";
 import Typography from '@mui/material/Typography';
 import DashboardLoggedIn from "../dashboard/DashboardLoggedIn";
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import * as React from 'react';
 
 function AddExpense() {
     const theme = useTheme();
@@ -22,6 +26,31 @@ function AddExpense() {
     const [expenseDate, setExpenseDate] = useState(null);
     const [expenseCategory, setExpenseCategory] = useState('');
     const { user, handleAddExpense } = use(AuthContext);
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose} >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -32,8 +61,8 @@ function AddExpense() {
         <div style={{
             width: '100%', height: '100vh'
         }}>
-      <DashboardLoggedIn />
-            
+            <DashboardLoggedIn />
+
             <Box
                 sx={{
                     display: 'flex',
@@ -46,11 +75,11 @@ function AddExpense() {
                 <form onSubmit={handleSubmit}>
                     <Box sx={{ pt: { xs: 3, sm: 4, mb: 5, lg: 5 } }}>
                         <Typography variant="h4" component="h2">
-                          Add Expense
+                            Add Expense
                         </Typography>
                     </Box>
                     <FormGroup>
-                        <FormControl sx={{mt:2, mb: 5 }}>
+                        <FormControl sx={{ mt: 2, mb: 5 }}>
                             <InputLabel htmlFor="expenseTitle">Title</InputLabel>
                             <Input
                                 id="expenseTitle"
@@ -95,7 +124,7 @@ function AddExpense() {
                     <Box sx={{ pt: 2, ml: 1, mr: 1 }}>
                         <Divider sx={{ color: theme.palette.text.secondary }} />
                     </Box>
-
+                    {/*snackbar */}
                     <Button color="primary" variant="contained" type="submit" fullWidth
                         sx={{
                             textTransform: 'none',
@@ -103,9 +132,17 @@ function AddExpense() {
                             pr: { xs: '70px', sm: '80px', md: '90px', lg: '100px' },
                             mt: 2,
                             backgroundColor: theme.palette.customColor
-                        }}>
+                        }}
+                        onClick={handleClick}>
                         Submit
                     </Button>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message="Expense Added"
+                        action={action}
+                    />
                 </form>
             </Box>
         </div>

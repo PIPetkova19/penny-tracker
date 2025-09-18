@@ -1,6 +1,8 @@
 import { useState, createContext, useEffect } from "react";
 import { supabase } from "../supabase/supabase-client";
 import { useNavigate } from "react-router";
+import Button from '@mui/material/Button';
+
 
 export const AuthContext = createContext();
 
@@ -164,7 +166,6 @@ function AuthProvider({ children }) {
                 alert(error.message);
                 throw error;
             }
-            alert("Expense had been added!");
         }
         catch (error) {
             alert(error.message);
@@ -174,7 +175,7 @@ function AuthProvider({ children }) {
     }
 
     async function fetchExpenses() {
-       const { data, error } = await supabase
+        const { data, error } = await supabase
             .from('expenses')
             .select('*')
             .eq('user_id', user.id)
